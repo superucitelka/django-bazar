@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ zbozi.nazev }}{% endblock %}
+
+{% block content %}
+    <h2>{{ zbozi.nazev }}</h2>
+    <p>{{ zbozi.popis }}</p>
+    <p>Stav: {% for star in "x"|ljust:zbozi.stav %}*{% endfor %}</p>
+{% endblock %}

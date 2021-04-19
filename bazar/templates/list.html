@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ zbozi.nazev }}{% endblock %}
+
+{% block content %}
+    {% for zbozi in zbozi_list %}
+<h3><a href="{% url 'detail' zbozi.pk %}">{{ zbozi.nazev }}</a></h3>
+        <p>Cena: {{ zbozi.cena }} Kč</p>
+        <p>Stav: {% with ''|center:zbozi.stav as range %}{% for _ in range %}*{% endfor %}{% endwith %}</p>
+        <p>Zařazení: {{ zbozi.druh.oblast }}: {{ zbozi.druh.oznaceni_druhu }}</p>
+    {% endfor %}
+{% endblock %}
