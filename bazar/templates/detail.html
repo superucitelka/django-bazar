@@ -1,9 +1,32 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ zbozi.nazev }}{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
 {% block content %}
-    <h2>{{ zbozi.nazev }}</h2>
-    <p>{{ zbozi.popis }}</p>
-    <p>Stav: {% for star in "x"|ljust:zbozi.stav %}*{% endfor %}</p>
+<div class="row mb-3">
+    <div class="col-sm-12 bg-warning">
+        <h2 class="display-4 text-center">Podrobné informace</h2>
+    </div>
+</div>
+<div class="row mt-5 mb-3">
+    <div class="col-md-6 mb-3">
+       {% if zbozi.foto %}
+          <img class="card-img-top" src="{{ zbozi.foto.url }}" alt="{{ zbozi.nazev }}">
+       {% else %}
+          <img class="card-img-top" src="{% static 'img/nopicture.jpg' %}" alt="Bez fotografie">
+       {% endif %}
+    </div>
+    <div class="col-md-6 p-3">
+        <h3>{{ zbozi.nazev }}</h3>
+        <p>{{ zbozi.popis }}</p>
+        <p>Stav: {% for star in "x"|ljust:zbozi.stav %}<i class="fa fa-star"></i>{% endfor %}</p>
+        <p>Zařazení: <mark>{{ zbozi.druh.oblast }}</mark> - <b>{{ zbozi.druh.oznaceni_druhu }}</b></p>
+        <p>Cena: <span class="cena">{{ zbozi.cena }} Kč</span></p>
+    </div>
+</div>
 {% endblock %}
