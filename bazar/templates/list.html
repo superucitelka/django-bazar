@@ -1,12 +1,38 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ zbozi.nazev }}{% endblock %}
-
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
 {% block content %}
+<div class="row mb-3">
+    <div class="col-sm-12 bg-warning">
+        <h2 class="display-4 text-center">Nabízené produkty</h2>
+    </div>
+</div>
+<div class="row">
     {% for zbozi in zbozi_list %}
-<h3><a href="{% url 'detail' zbozi.pk %}">{{ zbozi.nazev }}</a></h3>
-        <p>Cena: {{ zbozi.cena }} Kč</p>
-        <p>Stav: {% with ''|center:zbozi.stav as range %}{% for _ in range %}*{% endfor %}{% endwith %}</p>
-        <p>Zařazení: {{ zbozi.druh.oblast }}: {{ zbozi.druh.oznaceni_druhu }}</p>
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            {% if zbozi.foto %}
+            <figure class="cropped">
+                <img class="card-img-top" src="{{ zbozi.foto.url }}" alt="{{ zbozi.nazev }}">
+            </figure>
+            {% else %}
+            <figure class="cropped">
+                <img class="card-img-top" src="{% static 'img/nopicture.jpg' %}" alt="Bez fotografie">
+            </figure>
+            {% endif %}
+            <div class="card-body">
+                <h4 class="card-title"><a href="{% url 'detail' zbozi.pk %}">{{ zbozi.nazev }}</a></h4>
+                <p class="card-text">Zařazení: <mark>{{ zbozi.druh.oblast }}</mark> - <b>{{ zbozi.druh.oznaceni_druhu }}</b></p>
+                <p class="card-text">Cena: <span class="cena">{{ zbozi.cena }} Kč</span></p>
+                <p class="card-text">Stav: {% with ''|center:zbozi.stav as range %}{% for _ in range %}<i class="fa fa-star"></i>{% endfor %}{% endwith %}</p>
+                <a href="{% url 'detail' zbozi.pk %}" class="btn btn-primary">Podrobnosti</a>
+            </div>
+        </div>
+    </div>
     {% endfor %}
+</div>
 {% endblock %}
