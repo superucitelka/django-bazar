@@ -1,5 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.urls import reverse
+
 
 class Druh(models.Model):
     oznaceni_druhu = models.CharField(max_length=50, unique=True, verbose_name="Označení druhu zboží",
@@ -27,13 +29,13 @@ class Zbozi(models.Model):
     popis = models.TextField(blank=True, null=True, verbose_name="Popis zboží")
     cena = models.FloatField(validators=[MinValueValidator(0.0)], null=True, help_text="Zadejte nezáporné desetinné číslo", verbose_name="Cena")
     STAV = (
-        ('5', 'jako nový'),
-        ('4', 'málo používaný'),
-        ('3', 'často používaný'),
-        ('2', 'opotřebovaný'),
-        ('1', 'funkční vady'),
+        (5, 'jako nový'),
+        (4, 'málo používaný'),
+        (3, 'často používaný'),
+        (2, 'opotřebovaný'),
+        (1, 'funkční vady'),
     )
-    stav = models.CharField(max_length=20, choices=STAV, blank=True, default='3', verbose_name="Stav zboží", help_text='Vyberte označení stavu')
+    stav = models.IntegerField(max_length=1, choices=STAV, blank=True, default=3, verbose_name="Stav zboží", help_text='Vyberte označení stavu')
     foto = models.ImageField(upload_to='zbozi/%Y/%m/%d/', blank=True, null=True, verbose_name="Fotka zboží")
     druh = models.ForeignKey(Druh, on_delete=models.RESTRICT)
 
@@ -44,3 +46,7 @@ class Zbozi(models.Model):
 
     def __str__(self):
         return f"{self.nazev}, {self.cena}"
+
+    def get_absolute_url(self):
+        """Metoda vrací URL stránky, na které se vypisují podrobné informace o zboží"""
+        return reverse('detail', args=[str(self.id)])
