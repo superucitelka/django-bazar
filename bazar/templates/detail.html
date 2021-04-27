@@ -27,6 +27,7 @@
         <p>Stav: {% for star in "x"|ljust:zbozi.stav %}<i class="fa fa-star"></i>{% endfor %}</p>
         <p>Zařazení: <mark>{{ zbozi.druh.oblast }}</mark> - <b>{{ zbozi.druh.oznaceni_druhu }}</b></p>
         <p>Cena: <span class="cena">{{ zbozi.cena }} Kč</span></p>
+        <p><a href="{% url 'zbozi-update' zbozi.pk %}" class="btn btn-primary">Editovat</a> <a href="{% url 'zbozi-delete' zbozi.pk %}" class="btn btn-danger">Smazat</a></p>
     </div>
 </div>
 {% endblock %}

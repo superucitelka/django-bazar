@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-sm-12 bg-warning">
+        <h2 class="display-4 text-center">Odstranění produktu</h2>
+    </div>
+</div>
+  <div class="col-12">
+    <div class="alert alert-danger">
+      <h3>Chcete opravdu produkt odstranit?</h3>
+    </div>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Ano, smazat.">
+    </form>
+</div>
+{% endblock %}
